@@ -60,7 +60,7 @@ var DDPServer = function(opts) {
               })
 
             } catch (e) {
-              console.log("error calling method", data.method, e)
+              console.log("error calling method %s - %s", data.method, e)
               sendMessage({
                 id: data.id,
                 error: {
@@ -221,6 +221,8 @@ var DDPServer = function(opts) {
       },
       deleteProperty: function(_, id) {
         remove(id);
+        // TOBY - need to return result of delete for contract.
+        return true;
       }
     });
   }
