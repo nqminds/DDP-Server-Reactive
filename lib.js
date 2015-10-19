@@ -165,6 +165,9 @@ var DDPServer = function(opts) {
     function add(id, doc) {
       documents[id] = doc;
       proxiedDocuments[id] = Proxy(doc, {
+        get: function(_, field) {
+          return doc[field];
+        },
         set: function(_, field, value) {
           var changed = {};
           doc[field] = changed[field] = value;
@@ -223,6 +226,9 @@ var DDPServer = function(opts) {
         remove(id);
         // TOBY - need to return result of delete for contract.
         return true;
+      },
+      has: function(_, id) {
+        return id in proxiedDocuments;
       }
     });
   }
